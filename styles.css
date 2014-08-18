@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.command-list {
+    display: table-row;
+}
+
+.command-list div.turn {
+    display:table-cell;
+}
+
+.command-list div.row {
+    display: table-row;
+}
+
+.command-list div.header {
+    background-color: grey;
+    font-weight: bold;
+    color:white;
+}
+
+.command-list div.next {
+    font-weight: bold;
+    color:lightgray;
+}
+
+.command-list div.cell {
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+    padding:2px 4px;
+}
+
+#toolbar {
+    background: grey;
+    padding: 5px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+#toolbar div.input {
+    margin-bottom: 5px;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.header {
+    text-align: center;
+    font-weight: bold;
+    color:white;
+}
+
+.footer {
+    padding: 10px 0px;
+}

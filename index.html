@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html ng-app="wavingHandsApp">
+<head>
+    <link rel=stylesheet type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+    <link rel=stylesheet type="text/css" href="styles.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</head>
+<body ng-controller="HandsController">
+    <div class="command-list">
+        <div class="turn">
+            <div class="row">
+                <div class="cell header">RH</div>
+            </div>
+            <div class="row">
+                <div class="cell header">LH</div>
+            </div>
+        </div>
+        <div class="turn">
+            <div class="row">
+                <div class="cell next">{{rightHandCmd}}</div>
+            </div>
+            <div class="row">
+                <div class="cell next">{{leftHandCmd}}</div>
+            </div>
+        </div>
+        <div class="turn" ng-repeat="turn in commandList | filter:reverse">
+            <div class="row">
+                <div class="cell">{{turn.rightCmd}}</div>
+            </div>
+            <div class="row">
+                <div class="cell">{{turn.leftCmd}}</div>
+            </div>
+        </div>
+    </div>
+    <div id="toolbar">
+        <div class="toolbar input">
+            <div class="inline">
+                <div class="header">Left Hand</div>
+                <div class="btn-group">
+                    <label type="button" class="btn btn-default" ng-click="setLeftHandCmd('F')">F</label>
+                    <label type="button" class="btn btn-default" ng-click="setLeftHandCmd('P')">P</label>
+                    <label type="button" class="btn btn-default" ng-click="setLeftHandCmd('S')">S</label>
+                    <label type="button" class="btn btn-default" ng-click="setLeftHandCmd('W')">W</label>
+                    <label type="button" class="btn btn-default" ng-click="setLeftHandCmd('D')">D</label>
+                    <label type="button" class="btn btn-default" ng-click="setLeftHandCmd('>')">Stab</label>
+                    <label type="button" class="btn btn-default" ng-click="setLeftHandCmd('-')">None</label>
+                </div>
+            </div>
+
+            <label type="button" class="btn btn-default" ng-click="setLeftHandCmd('C'); setRightHandCmd('C')">Clap</label>
+
+            <div class="inline">
+                <div class="header">Right Hand</div>
+                <div class="btn-group">
+                    <label type="button" class="btn btn-default" ng-click="setRightHandCmd('F')">F</label>
+                    <label type="button" class="btn btn-default" ng-click="setRightHandCmd('P')">P</label>
+                    <label type="button" class="btn btn-default" ng-click="setRightHandCmd('S')">S</label>
+                    <label type="button" class="btn btn-default" ng-click="setRightHandCmd('W')">W</label>
+                    <label type="button" class="btn btn-default" ng-click="setRightHandCmd('D')">D</label>
+                    <label type="button" class="btn btn-default" ng-click="setRightHandCmd('>')">Stab</label>
+                    <label type="button" class="btn btn-default" ng-click="setRightHandCmd('-')">None</label>
+                </div>
+            </div>
+        </div>
+        <div class="toolbar bottom">
+            <button type="button" class="btn btn-success btn-block" ng-click="commitTurn()">Commit</button>
+        </div>
+    </div>
+</body>
+</html>
