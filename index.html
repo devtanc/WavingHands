@@ -14,21 +14,21 @@
             <td class="header">RH</td>
             <td class="next">{{rightHandCmd}}</td>
             <td class="gesture"
-                ng-repeat="turn in commandList | filter:reverse"
-                ng-class="{chain: startGesture.hand == 'right' && $index < startGesture.index}"
-                ng-mouseover="!persistList ? setStartGesture($index, 'right') : null"
+                ng-repeat="turn in commandList"
+                ng-class="{'chain':turn[1].chain, 'selected':turn[1].selected}"
+                ng-mouseover="!persistList ? hoverChain($index, 1) : null"
                 ng-mouseout="!persistList ? resetHover() : null"
-                ng-mouseup="togglePersist($index, 'right')">{{turn.rightCmd}}</td>
+                ng-mouseup="togglePersist($index, 1)">{{turn[1].gesture}}</td>
         </tr>
         <tr>
             <td class="header">LH</td>
             <td class="next">{{leftHandCmd}}</td>
             <td class="gesture"
-                ng-repeat="turn in commandList | filter:reverse"
-                ng-class="{chain: startGesture.hand == 'left' && $index < startGesture.index}"
-                ng-mouseover="!persistList ? setStartGesture($index, 'left') : null"
+                ng-repeat="turn in commandList"
+                ng-class="{'chain':turn[0].chain, 'selected':turn[0].selected}"
+                ng-mouseover="!persistList ? hoverChain($index, 0) : null"
                 ng-mouseout="!persistList ? resetHover() : null"
-                ng-mouseup="togglePersist($index, 'left')">{{turn.leftCmd}}</td>
+                ng-mouseup="togglePersist($index, 0)">{{turn[0].gesture}}</td>
         </tr>
     </table>
     <table class="command-list">
@@ -37,21 +37,21 @@
             <td class="header">RH</td>
             <td class="next">{{rightHandCmd}}</td>
             <td class="gesture"
-                ng-repeat="turn in commandList | filter:reverse"
+                ng-repeat="turn in commandList"
                 ng-class="{chain: startGesture.hand == 'right' && $index < startGesture.index}"
-                ng-mouseover="!persistList ? setStartGesture($index, 'right') : null"
+                ng-mouseover="!persistList ? hoverChain($index, 'right') : null"
                 ng-mouseout="!persistList ? resetHover() : null"
-                ng-mouseup="togglePersist($index, 'right')">{{turn.rightCmd}}</td>
+                ng-mouseup="togglePersist($index, 'right')">{{"-"}}</td>
         </tr>
         <tr>
             <td class="header">LH</td>
             <td class="next">{{leftHandCmd}}</td>
             <td class="gesture"
-                ng-repeat="turn in commandList | filter:reverse"
+                ng-repeat="turn in commandList"
                 ng-class="{chain: startGesture.hand == 'left' && $index < startGesture.index}"
-                ng-mouseover="!persistList ? setStartGesture($index, 'left') : null"
+                ng-mouseover="!persistList ? hoverChain($index, 'left') : null"
                 ng-mouseout="!persistList ? resetHover() : null"
-                ng-mouseup="togglePersist($index, 'left')">{{turn.leftCmd}}</td>
+                ng-mouseup="togglePersist($index, 'left')">{{"-"}}</td>
         </tr>
     </table>
     <div class="console">

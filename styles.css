@@ -32,6 +32,10 @@ td {
     padding:2px 5px;
 }
 
+td.selected {
+    background-color: gray !important;
+}
+
 td.gesture:hover {
     cursor: pointer;
     background-color: gray;

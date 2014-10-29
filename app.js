@@ -17,12 +17,12 @@ app.controller('HandsController', ['$scope', function($scope){
         '-',
         'C'
     ];
-    $scope.rightHandCmd = '-';
-    $scope.leftHandCmd = '-';
-    $scope.startGesture = {
-        index: 0,
-        hand: "right"
-    };
+    $scope.rightHandCmd = ' ';
+    $scope.leftHandCmd = ' ';
+//    $scope.startGesture = {
+//        index: 0,
+//        hand: "right"
+//    };
     $scope.beginningSequence = "";
     
     $scope.initButtonArray = function() {
@@ -54,7 +54,7 @@ app.controller('HandsController', ['$scope', function($scope){
                 $scope.rightHandCmd = $scope.cmdArray[i];
             }
         }
-        console.log($scope.buttonArray);
+        //console.log($scope.buttonArray);
         if($scope.buttonArray[0][1] && $scope.buttonArray[1][1]){
             $scope.action.buttonText = "Surrender?";
             $scope.action.class = "btn-warning";
@@ -69,59 +69,55 @@ app.controller('HandsController', ['$scope', function($scope){
     
     $scope.commitTurn = function() {
         $scope.persistList = false;
-        $scope.addCommandSet({
-            rightCmd:$scope.rightHandCmd,
-            leftCmd:$scope.leftHandCmd
-        });
+        $scope.addCommandSet([
+            {
+                gesture: $scope.leftHandCmd,
+                selected: false,
+                chain: false,
+                pair: $scope.rightHandCmd == $scope.leftHandCmd ? true : false
+            },
+            {
+                gesture: $scope.rightHandCmd,
+                selected: false,
+                chain: false,
+                pair: $scope.rightHandCmd == $scope.leftHandCmd ? true : false
+            }
+        ]);
         $scope.initButtonArray();
     }
     
     $scope.addCommandSet = function(commandSet) {
         $scope.commandList.splice(0,0, commandSet);
-    }
-    
-    $scope.setStartGesture = function(index, hand) {
-        $scope.startGesture.index = index;
-        if (hand == 'right') {
-            $scope.startGesture.hand = "right";
-        } else {
-            $scope.startGesture.hand = "left";
-        }
-        console.log($scope.startGesture);
-        $scope.calculateSpellList();
+        console.log($scope.commandList);
     }
     
     $scope.togglePersist = function(index, hand) {
         if (!$scope.persistList) {
             $scope.persistList = true;
+            $scope.commandList[index][hand].selected = true;
         } else {
-            if (index == $scope.startGesture.index && hand == $scope.startGesture.hand) {
+            if ($scope.commandList[index][hand].selected) {
+                $scope.commandList[index][hand].selected = false;
                 $scope.persistList = false;
             }
         }
     }
     
     $scope.resetHover = function() {
-        $scope.startGesture.index = 0;
+        for(var i = 0; i < $scope.commandList.length; i++){
+            $scope.commandList[i][0].chain = false;
+            $scope.commandList[i][1].chain = false;
+        }
         $scope.beginningSequence = "";
         $scope.matchingSpells = [];
         console.log("Hover reset");
     }
     
-    $scope.calculateSpellList = function() {
+    $scope.hoverChain = function(index, hand) {
         $scope.matchingSpells = [];
-        if($scope.startGesture.hand == "right"){
-            for( var i = $scope.startGesture.index; i >= 0; i-- ){
-                $scope.beginningSequence += $scope.commandList[i].rightCmd;
-                console.log(i);
-                console.log($scope.beginningSequence);
-            }
-        } else {
-            for( var i = $scope.startGesture.index; i >= 0; i-- ){
-                $scope.beginningSequence += $scope.commandList[i].leftCmd;
-                console.log(i);
-                console.log($scope.beginningSequence);
-            }
+        for(var i = index; i >= 0; i--){
+            $scope.commandList[i][hand].chain = true;
+            $scope.beginningSequence += $scope.commandList[i][hand].gesture;
         }
         for (var i = 0; i < $scope.spellList.length; i++){
             if ($scope.spellList[i].sequence.indexOf($scope.beginningSequence) == 0) {
