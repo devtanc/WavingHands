@@ -6,6 +6,7 @@ app.controller('HandsController', ['$scope', function($scope){
         class: 'btn-success'
     };
     $scope.commandList = [];
+    $scope.highlightSpell = false;
     $scope.persistList = false;
     $scope.cmdArray = [
         'F',
@@ -88,7 +89,7 @@ app.controller('HandsController', ['$scope', function($scope){
     
     $scope.addCommandSet = function(commandSet) {
         $scope.commandList.splice(0,0, commandSet);
-        console.log($scope.commandList);
+//        console.log($scope.commandList);
     }
     
     $scope.togglePersist = function(index, hand) {
@@ -110,7 +111,7 @@ app.controller('HandsController', ['$scope', function($scope){
         }
         $scope.beginningSequence = "";
         $scope.matchingSpells = [];
-        console.log("Hover reset");
+//        console.log("Hover reset");
     }
     
     $scope.hoverChain = function(index, hand) {
