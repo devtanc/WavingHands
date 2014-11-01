@@ -84,6 +84,7 @@ app.controller('HandsController', ['$scope', function($scope){
                 pair: $scope.rightHandCmd == $scope.leftHandCmd ? true : false
             }
         ]);
+//        console.log($scope.rightHandCmd == $scope.leftHandCmd ? true : false);
         $scope.initButtonArray();
     }
     
