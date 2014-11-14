@@ -35,6 +35,10 @@ app.controller('HandsController', ['$scope', function($scope){
     
     $scope.initButtonArray();
     
+    $scope.debug = function(data) {
+        console.log(data);
+    }
+    
     $scope.setCmd = function(hand, cmd) {
         for(var i = 0; i < $scope.buttonArray[hand].length; i++) {
             $scope.buttonArray[hand][i] = 0;

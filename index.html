@@ -67,7 +67,7 @@
     <div class="possible-spell-list">
         <div class="heading-sm">Potential Spells</div>
         <div class="heading-sm heading-sub">starting with: <code>{{beginningSequence}}</code></div>
-        <div ng-repeat="spell in matchingSpells">{{spell.name}}: {{spell.sequence}}</div>
+        <div class="clickable" ng-click="debug('Clicked spell: ' + spell.name + ': ' + spell.sequence)" ng-repeat="spell in matchingSpells">{{spell.name}}: {{spell.sequence}}</div>
     </div>
     <div id="toolbar">
         <div class="toolbar input">

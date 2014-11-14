@@ -108,3 +108,7 @@ td.pair {
 #ButtonSet:hover {
     cursor: pointer;
 }
+
+.clickable:hover {
+    cursor: pointer;
+}
