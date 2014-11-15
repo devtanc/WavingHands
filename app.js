@@ -1,13 +1,28 @@
 var app = angular.module('wavingHandsApp', [ ]);
 
 app.controller('HandsController', ['$scope', function($scope){
+    //$scope.action: bound to the action button at the bottom of the UI (which is linked to the commitTurn method). The buttonText attribute is displayed while the class attribute sets the class of the DOM element
+    
     $scope.action = {
         buttonText: 'Commit',
         class: 'btn-success'
     };
+    
+    /*  $scope.commandList: This is the user's command list. It is an array of commandSet arrays of objects structured as follows
+    *        {
+    *            gesture: [string],
+    *            selected: [boolean],
+    *            chain: [boolean],
+    *            pair: [boolean: true if both objects in the commandSet have equivalent (==) gesture attribute strings]
+    *        }
+    *   commandSet[0] represents the left hand and commandSet[1] represents the right hand
+    *   e.g. commandList[5][0] would access the 6th commandSet, left hand object
+    */
     $scope.commandList = [];
-    $scope.highlightSpell = false;
+    
+    //
     $scope.persistList = false;
+    $scope.highlightSpell = false;
     $scope.cmdArray = [
         'F',
         'P',
@@ -20,19 +35,24 @@ app.controller('HandsController', ['$scope', function($scope){
     ];
     $scope.rightHandCmd = ' ';
     $scope.leftHandCmd = ' ';
+    $scope.selectedHand = {
+        index: null,
+        hand: null
+    }
 //    $scope.startGesture = {
 //        index: 0,
 //        hand: "right"
 //    };
     $scope.beginningSequence = "";
     
+    //$scope.buttonArray: Represents the state of the buttons for selecting the gestures for the current turn. This item contains two arrays that are both parallel with $scope.cmdArray.
+    //The selected gesture is indicated in each array with a 1, and only one array item should contain a 1 value at any given time.
     $scope.initButtonArray = function() {
         $scope.buttonArray = [
             [0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0]
         ];
     }
-    
     $scope.initButtonArray();
     
     $scope.debug = function(data) {
@@ -73,7 +93,11 @@ app.controller('HandsController', ['$scope', function($scope){
     }
     
     $scope.commitTurn = function() {
-        $scope.persistList = false;
+        if($scope.persistList) {
+            $scope.togglePersist($scope.selectedHand.index, $scope.selectedHand.hand);
+            $scope.resetHover();
+        }
+        
         $scope.addCommandSet([
             {
                 gesture: $scope.leftHandCmd,
@@ -101,10 +125,14 @@ app.controller('HandsController', ['$scope', function($scope){
         if (!$scope.persistList) {
             $scope.persistList = true;
             $scope.commandList[index][hand].selected = true;
+            $scope.selectedHand.index = index;
+            $scope.selectedHand.hand = hand;
         } else {
             if ($scope.commandList[index][hand].selected) {
                 $scope.commandList[index][hand].selected = false;
                 $scope.persistList = false;
+                $scope.selectedHand.index = null;
+                $scope.selectedHand.hand = null;
             }
         }
     }
