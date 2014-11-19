@@ -35,7 +35,7 @@ app.controller('HandsController', ['$scope', function($scope){
     ];
     $scope.rightHandCmd = ' ';
     $scope.leftHandCmd = ' ';
-    $scope.selectedHand = {
+    $scope.persistedHand = {
         index: null,
         hand: null
     }
@@ -94,7 +94,7 @@ app.controller('HandsController', ['$scope', function($scope){
     
     $scope.commitTurn = function() {
         if($scope.persistList) {
-            $scope.togglePersist($scope.selectedHand.index, $scope.selectedHand.hand);
+            $scope.togglePersist($scope.persistedHand.index, $scope.persistedHand.hand);
             $scope.resetHover();
         }
         
@@ -121,18 +121,33 @@ app.controller('HandsController', ['$scope', function($scope){
 //        console.log($scope.commandList);
     }
     
+/* toggle Persist process
+    -Click gesture
+        Select gesture
+        Highlight descendents
+        Persist spell list
+
+    -Click new gesture
+        Clear current selection
+        Select gesture
+        Highlight descendents
+        Persist spell list
+
+    -Click current gesture
+        Clear current selection
+*/
     $scope.togglePersist = function(index, hand) {
         if (!$scope.persistList) {
             $scope.persistList = true;
             $scope.commandList[index][hand].selected = true;
-            $scope.selectedHand.index = index;
-            $scope.selectedHand.hand = hand;
+            $scope.persistedHand.index = index;
+            $scope.persistedHand.hand = hand;
         } else {
             if ($scope.commandList[index][hand].selected) {
                 $scope.commandList[index][hand].selected = false;
                 $scope.persistList = false;
-                $scope.selectedHand.index = null;
-                $scope.selectedHand.hand = null;
+                $scope.persistedHand.index = null;
+                $scope.persistedHand.hand = null;
             }
         }
     }
